@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cl.duoc.tiendajuegos.controller.MantenedorTiendaController">
+   <children>
+      <Label text="Ingrese Producto" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="10.0" left="70.0" right="10.0" top="10.0" />
+         </VBox.margin></Label>
+      <VBox prefHeight="638.0" prefWidth="286.0">
+         <children>
+            <ComboBox fx:id="cmbTipoProducto" prefHeight="24.0" prefWidth="217.0" promptText="Seleccione una Opcion">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </ComboBox>
+            <TextField fx:id="txtName" promptText="Ingrese Nombre">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtStock" promptText="Ingrese Stock">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtPrice" promptText="Ingrese Precio">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <VBox fx:id="vboxJuegos" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <TextField fx:id="txtMinJug" promptText="Ingrese Minimo de Jugadores">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+                   </TextField>
+               <TextField fx:id="txtMaxJug" promptText="Ingrese Maximo de Jugadores">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </TextField>
+               <TextField fx:id="txtEdadMin" promptText="Ingrese la Edad Minima">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </TextField>
+
+            </VBox>
+
+            <VBox fx:id="vboxTcg" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <ComboBox fx:id="cmbFranquicia" promptText="Franquicia">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </ComboBox>
+               <ComboBox fx:id="cmbEdicion" promptText="Edicion">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </ComboBox>
+               <ComboBox fx:id="cmbTipoTCG" promptText="Tipo de Producto">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </ComboBox>
+
+            </VBox>
+
+
+            <VBox fx:id="vboxAccesorio" disable="true" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <ComboBox fx:id="cmbTipoAccesorio" promptText="Tipo de Accesorio">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </ComboBox>
+               <ComboBox fx:id="cmbMarca" promptText="Marca">
+                  <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </VBox.margin>
+               </ComboBox>
+
+
+            </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnIngresar" mnemonicParsing="false" text="Ingresar">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnInventario" mnemonicParsing="false" text="Ir a Inventario">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnVolver" mnemonicParsing="false" text="Volver">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
+</VBox>

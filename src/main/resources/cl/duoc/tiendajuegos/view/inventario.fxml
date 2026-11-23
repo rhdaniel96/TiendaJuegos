@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="490.0" prefWidth="718.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="cl.duoc.tiendajuegos.controller.InventarioController">
+   <center>
+      <TableView fx:id="tblInventario" prefHeight="384.0" prefWidth="733.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="48.0" text="ID" />
+           <TableColumn fx:id="colTipo" prefWidth="48.0" text="Tipo" />
+          <TableColumn fx:id="colNombre" prefWidth="79.0" text="Nombre" />
+          <TableColumn fx:id="colStock" prefWidth="58.0" text="Stock" />
+           <TableColumn fx:id="colPrecio" prefWidth="65.0" text="Precio" />
+           <TableColumn fx:id="colMinJug" prefWidth="69.0" text="Min Jugadores" />
+           <TableColumn fx:id="colMaxJug" prefWidth="70.0" text="Max Jugadores" />
+           <TableColumn fx:id="colEdadMin" prefWidth="89.0" text="Edad Minima" />
+           <TableColumn fx:id="colFranquicia" prefWidth="122.0" text="Franquicia" />
+           <TableColumn fx:id="colEdicion" prefWidth="75.0" text="Edicion" />
+           <TableColumn fx:id="colTipoProd" prefWidth="75.0" text="Tipo Producto" />
+           <TableColumn fx:id="colTipoAccesorio" prefWidth="75.0" text="Tipo Accesorio" />
+           <TableColumn fx:id="colMarca" prefWidth="75.0" text="Marca" />
+
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <Label text="Inventario" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <right>
+      <AnchorPane prefHeight="464.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnVolverM" layoutX="32.0" layoutY="411.0" mnemonicParsing="false" text="Volver al Menu" />
+            <VBox prefHeight="226.0" prefWidth="179.0">
+               <children>
+                  <Label text="Mostrar">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="65.0" right="25.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <CheckBox fx:id="chkJuego" mnemonicParsing="false" text="J">
+                           <HBox.margin>
+                              <Insets left="30.0" right="10.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="chkTCG" mnemonicParsing="false" text="T">
+                           <HBox.margin>
+                              <Insets left="5.0" right="10.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="chkAccesorio" mnemonicParsing="false" text="A">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </CheckBox>
+                     </children>
+                  </HBox>
+                  <Label text="Filtrar">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="70.0" right="25.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ComboBox fx:id="cmbFiltro" prefWidth="150.0">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <TextField fx:id="txtFiltro">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="btnFiltro" mnemonicParsing="false" text="Filtrar">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label text="Actualizar Item">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="40.0" right="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtActualizar">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="btnActualizar" mnemonicParsing="false" text="Actualizar">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label text="Eliminar Seleccion">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="35.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" text="Eliminar">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

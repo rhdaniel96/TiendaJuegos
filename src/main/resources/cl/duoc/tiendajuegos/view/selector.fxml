@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="220.0" prefWidth="184.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cl.duoc.tiendajuegos.controller.SelectorController">
+   <children>
+      <Label prefHeight="16.0" prefWidth="107.0" text="Elija Una opcion">
+         <VBox.margin>
+            <Insets bottom="10.0" left="35.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </Label>
+      <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="24.0" prefWidth="192.0" text="Ingresar Producto">
+         <VBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="btnInventario" mnemonicParsing="false" prefHeight="24.0" prefWidth="183.0" text="Ver Inventario">
+         <VBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="btnAdministrar" mnemonicParsing="false" prefHeight="24.0" prefWidth="187.0" text="Administrar">
+         <VBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="btnBackLog" mnemonicParsing="false" text="Volver al Menu Principal">
+         <VBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+</VBox>
