@@ -1,14 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="507.0" prefWidth="397.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Administracion">
+         <VBox.margin>
+            <Insets bottom="10.0" left="150.0" />
+         </VBox.margin></Label>
+      <Label text="Agregar Usuario">
+         <VBox.margin>
+            <Insets left="140.0" />
+         </VBox.margin></Label>
+      <TextField promptText="Nombre Usuario">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin></TextField>
+      <PasswordField promptText="Contrasena">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin></PasswordField>
+      <Button mnemonicParsing="false" text="Agregar">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></Button>
+      <Label text="Agregar Franquicia TCG">
+         <VBox.margin>
+            <Insets bottom="5.0" left="120.0" />
+         </VBox.margin></Label>
+      <TextField promptText="Franquicia TCG">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin></TextField>
+      <Button mnemonicParsing="false" text="Agregar">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></Button>
+      <Label text="Agregar Edicion">
+         <VBox.margin>
+            <Insets bottom="5.0" left="140.0" />
+         </VBox.margin></Label>
+      <TextField promptText="Edicion TCG">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin></TextField>
+      <Button mnemonicParsing="false" text="Agregar">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin></Button>
+      <Label text="Agregar Tipo de Accesorio">
+         <VBox.margin>
+            <Insets bottom="5.0" left="115.0" />
+         </VBox.margin></Label>
+      <TextField promptText="Tipo Accesorio">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </TextField>
+      <Button mnemonicParsing="false" text="Agregar">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Button>
+      <Label text="Agregar Marca">
+         <VBox.margin>
+            <Insets bottom="5.0" left="150.0" />
+         </VBox.margin>
+      </Label>
+      <TextField promptText="Marca Accesorio">
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </TextField>
+      <Button mnemonicParsing="false" text="Agregar">
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Button>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" text="Limpiar ">
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Volver a Menu">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>

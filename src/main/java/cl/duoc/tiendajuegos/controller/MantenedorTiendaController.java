@@ -12,12 +12,21 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import cl.duoc.tiendajuegos.model.Producto;
+import cl.duoc.tiendajuegos.model.JuegoMesa;
+import cl.duoc.tiendajuegos.model.Tcg;
+import cl.duoc.tiendajuegos.model.Accesorio;
+import cl.duoc.tiendajuegos.repository.ProductoRepository;
+
 public class MantenedorTiendaController {
 
-    // REPOSITORIO
+    // REPOSITORIOS
 
     private final CatalogoRepository catalogoRepository =
             new CatalogoRepository();
+
+    private final ProductoRepository productoRepository =
+            new ProductoRepository();
 
 
     // CAMPOS GENERALES
@@ -45,6 +54,9 @@ public class MantenedorTiendaController {
 
     @FXML
     private Button btnVolver;
+
+    @FXML
+    private Button btnLimpiar;
 
 
     // VBOX JUEGOS
@@ -149,6 +161,10 @@ public class MantenedorTiendaController {
         btnVolver.setOnAction(event ->
                 abrirPantalla(event, "selector.fxml")
         );
+
+        // AGREGAR NUEVO PRODUCTO
+
+        btnIngresar.setOnAction(event -> agregarProducto());
 
     }
 
@@ -360,5 +376,213 @@ public class MantenedorTiendaController {
         alerta.showAndWait();
 
     }
+
+    // METODO AGREGAR NUEVO PRODUCTO A LA BD
+    private void agregarProducto() {
+
+        // 1. OBTENER TIPO DE PRODUCTO
+
+        String seleccion = cmbTipoProducto.getValue();
+
+        // 2. VERIFICAR QUE EXISTA UNA SELECCION
+
+        if (seleccion == null) {
+            mostrarAdvertencia("Debe seleccionar un tipo de producto");
+            return;
+        }
+
+        try {
+
+            // 3. OBTENER Y VALIDAR CAMPOS GENERALES
+
+            String nombre = txtName.getText().trim();
+
+            if (nombre.isBlank() || nombre.length() > 60) {
+                throw new IllegalArgumentException(
+                        "El nombre debe contener entre 1 y 60 caracteres"
+                );
+            }
+
+            int stock = leerEntero(txtStock, "Stock");
+            int precio = leerEntero(txtPrice, "Precio");
+
+            // 4. CREAR PRODUCTO SEGUN SELECCION
+
+            Producto producto;
+
+            switch (seleccion) {
+
+                case "Juegos de Mesa":
+
+                    int minJug = leerEntero(
+                            txtMinJug, "Minimo de jugadores"
+                    );
+
+                    int maxJug = leerEntero(
+                            txtMaxJug, "Maximo de jugadores"
+                    );
+
+                    int edadMin = leerEntero(
+                            txtEdadMin, "Edad minima"
+                    );
+
+                    if (minJug < 1 || maxJug < minJug) {
+                        throw new IllegalArgumentException(
+                                "El minimo debe ser mayor que cero "
+                                        + "y no superar al maximo de jugadores"
+                        );
+                    }
+
+                    producto = new JuegoMesa(
+                            0, 'J', nombre, stock, precio,
+                            minJug, maxJug, edadMin
+                    );
+
+                    break;
+
+                case "TCG":
+
+                    String franquicia = obtenerSeleccion(
+                            cmbFranquicia, "Franquicia"
+                    );
+
+                    String edicion = obtenerSeleccion(
+                            cmbEdicion, "Edicion"
+                    );
+
+                    String tipoTCG = obtenerSeleccion(
+                            cmbTipoTCG, "Tipo de producto TCG"
+                    );
+
+                    producto = new Tcg(
+                            0, 'T', nombre, stock, precio,
+                            franquicia, edicion, tipoTCG
+                    );
+
+                    break;
+
+                case "Accesorio":
+
+                    String tipoAccesorio = obtenerSeleccion(
+                            cmbTipoAccesorio, "Tipo de accesorio"
+                    );
+
+                    String marca = obtenerSeleccion(
+                            cmbMarca, "Marca"
+                    );
+
+                    producto = new Accesorio(
+                            0, 'A', nombre, stock, precio,
+                            tipoAccesorio, marca
+                    );
+
+                    break;
+
+                default:
+
+                    throw new IllegalArgumentException(
+                            "Tipo de producto no valido"
+                    );
+            }
+
+            // 5. GUARDAR EN MARIA DB
+
+            productoRepository.guardar(producto);
+
+            // 6. INFORMAR RESULTADO
+
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+
+            alerta.setTitle("Producto registrado");
+            alerta.setHeaderText(null);
+            alerta.setContentText(
+                    "Producto agregado correctamente. ID: "
+                            + producto.getIdProducto()
+            );
+
+            alerta.showAndWait();
+
+        } catch (IllegalArgumentException e) {
+
+            mostrarAdvertencia(e.getMessage());
+
+        } catch (SQLException e) {
+
+            if (e.getErrorCode() == 1062) {
+                mostrarAdvertencia(
+                        "Ya existe un producto con ese nombre"
+                );
+            } else {
+                mostrarAlerta("Error al guardar el producto");
+            }
+
+            e.printStackTrace();
+        }
+    }
+
+
+// VALIDAR TEXTFIELD NUMERICO
+
+    private int leerEntero(TextField campo, String nombreCampo) {
+
+        String valor = campo.getText().trim();
+
+        if (valor.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Debe completar el campo: " + nombreCampo
+            );
+        }
+
+        try {
+
+            int numero = Integer.parseInt(valor);
+
+            if (numero < 0) {
+                throw new IllegalArgumentException(
+                        nombreCampo + " no puede ser negativo"
+                );
+            }
+
+            return numero;
+
+        } catch (NumberFormatException e) {
+
+            throw new IllegalArgumentException(
+                    nombreCampo + " debe ser un numero entero valido"
+            );
+        }
+    }
+
+
+// VALIDAR COMBOBOX
+
+    private String obtenerSeleccion(
+            ComboBox<String> combo, String nombreCampo) {
+
+        String seleccion = combo.getValue();
+
+        if (seleccion == null || seleccion.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Debe seleccionar: " + nombreCampo
+            );
+        }
+
+        return seleccion;
+    }
+
+
+// MOSTRAR ADVERTENCIAS DE VALIDACION
+
+    private void mostrarAdvertencia(String mensaje) {
+
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+
+        alerta.setTitle("Datos incompletos o invalidos");
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+
 
 }

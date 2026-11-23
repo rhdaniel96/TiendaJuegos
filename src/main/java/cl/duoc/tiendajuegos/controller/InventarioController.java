@@ -44,6 +44,9 @@ public class InventarioController {
     @FXML
     private Button btnEliminar;
 
+    @FXML
+    private Button btnExportar;
+
     // Tabla y Columnas
     @FXML
     private TableView tblInventario;
