@@ -33,11 +33,21 @@
       </Label>
    </top>
    <right>
-      <AnchorPane prefHeight="464.0" prefWidth="206.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="464.0" prefWidth="226.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnVolverM" layoutX="32.0" layoutY="411.0" mnemonicParsing="false" text="Volver al Menu" />
             <VBox prefHeight="226.0" prefWidth="179.0">
                <children>
+                  <Label text="Actualizar Tabla">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="50.0" right="25.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" text="Actualizar">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </Button>
                   <Label text="Mostrar">
                      <VBox.margin>
                         <Insets bottom="5.0" left="65.0" right="25.0" top="5.0" />

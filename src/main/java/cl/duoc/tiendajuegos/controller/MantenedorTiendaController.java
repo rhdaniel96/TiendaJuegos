@@ -166,6 +166,9 @@ public class MantenedorTiendaController {
 
         btnIngresar.setOnAction(event -> agregarProducto());
 
+        // BOTON LIMPIAR
+        btnLimpiar.setOnAction(event -> limpiarCampos());
+
     }
 
 
@@ -582,6 +585,44 @@ public class MantenedorTiendaController {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+
+
+    private void limpiarCampos() {
+
+        // CAMPOS GENERALES
+        cmbTipoProducto.getSelectionModel().clearSelection();
+
+        txtName.clear();
+        txtStock.clear();
+        txtPrice.clear();
+
+        // CAMPOS JUEGOS DE MESA
+        txtMinJug.clear();
+        txtMaxJug.clear();
+        txtEdadMin.clear();
+
+        // CAMPOS TCG
+        cmbFranquicia.getSelectionModel().clearSelection();
+        cmbEdicion.getSelectionModel().clearSelection();
+        cmbTipoTCG.getSelectionModel().clearSelection();
+
+        // CAMPOS ACCESORIOS
+        cmbTipoAccesorio.getSelectionModel().clearSelection();
+        cmbMarca.getSelectionModel().clearSelection();
+
+        // REINICIAR COMBOBOX DEPENDIENTES
+        cmbEdicion.getItems().clear();
+        cmbMarca.getItems().clear();
+
+        cmbEdicion.setDisable(true);
+        cmbMarca.setDisable(true);
+
+        // OCULTAR VBOX SECUNDARIOS
+        ocultarVBox();
+    }
+
+
+
 
 
 
