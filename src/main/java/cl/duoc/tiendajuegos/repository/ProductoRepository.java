@@ -2,6 +2,8 @@ package cl.duoc.tiendajuegos.repository;
 
 import cl.duoc.tiendajuegos.database.ConexionDB;
 import cl.duoc.tiendajuegos.model.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.*;
 
@@ -103,4 +105,87 @@ public class ProductoRepository {
             }
         }
     }
+
+
+    // CONSULTAR PRODUCTOS DE MARIA DB
+
+    public List<Producto> listarProductos() throws SQLException {
+
+        List<Producto> productos = new ArrayList<>();
+
+        String sql = "SELECT * FROM PRODUCTO ORDER BY IDPRODUCTO";
+
+        try (
+                Connection conexion = ConexionDB.getConnection();
+                PreparedStatement ps = conexion.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()
+        ) {
+
+            while (rs.next()) {
+
+                // ATRIBUTOS GENERALES
+
+                int id = rs.getInt("IDPRODUCTO");
+                String tipoSQL = rs.getString("TIPO");
+
+                if (tipoSQL == null || tipoSQL.isBlank()) {
+                    throw new SQLException(
+                            "Producto sin tipo. ID: " + id
+                    );
+                }
+
+                char tipo = tipoSQL.charAt(0);
+
+                String nombre = rs.getString("NOMBREPRODUCTO");
+                int stock = rs.getInt("STOCK");
+                int precio = rs.getInt("PRECIO");
+
+                Producto producto;
+
+                switch (tipo) {
+
+                    case 'J':
+
+                        producto = new JuegoMesa(
+                                id, tipo, nombre, stock, precio,
+                                rs.getInt("MINJUGADORES"),
+                                rs.getInt("MAXJUGADORES"),
+                                rs.getInt("EDADMINIMA")
+                        );
+                        break;
+
+                    case 'T':
+
+                        producto = new Tcg(
+                                id, tipo, nombre, stock, precio,
+                                rs.getString("FRANQUICIA"),
+                                rs.getString("EDICION"),
+                                rs.getString("TIPOPRODUCTO")
+                        );
+                        break;
+
+                    case 'A':
+
+                        producto = new Accesorio(
+                                id, tipo, nombre, stock, precio,
+                                rs.getString("TIPOACCESORIO"),
+                                rs.getString("MARCA")
+                        );
+                        break;
+
+                    default:
+
+                        throw new SQLException(
+                                "Tipo no valido para producto ID: " + id
+                        );
+                }
+
+                productos.add(producto);
+            }
+        }
+
+        return productos;
+    }
+
+
 }

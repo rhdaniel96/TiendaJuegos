@@ -10,6 +10,15 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+import cl.duoc.tiendajuegos.model.*;
+import cl.duoc.tiendajuegos.repository.ProductoRepository;
+
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
+
+import java.sql.SQLException;
+
 import java.io.IOException;
 
 public class InventarioController {
@@ -47,36 +56,55 @@ public class InventarioController {
     @FXML
     private Button btnExportar;
 
-    // Tabla y Columnas
     @FXML
-    private TableView tblInventario;
+    private Button btnActualizarTabla;
+
+
+
+    // Tabla y Columnas
 
     @FXML
-    private TableColumn colId;
+    private TableView<Producto> tblInventario;
+
     @FXML
-    private TableColumn colTipo;
+    private TableColumn<Producto, Integer> colId;
+
     @FXML
-    private TableColumn colNombre;
+    private TableColumn<Producto, String> colTipo;
+
     @FXML
-    private TableColumn colStock;
+    private TableColumn<Producto, String> colNombre;
+
     @FXML
-    private TableColumn colPrecio;
+    private TableColumn<Producto, Integer> colStock;
+
     @FXML
-    private TableColumn colMinJug;
+    private TableColumn<Producto, Integer> colPrecio;
+
     @FXML
-    private TableColumn colMaxJug;
+    private TableColumn<Producto, Integer> colMinJug;
+
     @FXML
-    private TableColumn colEdadMin;
+    private TableColumn<Producto, Integer> colMaxJug;
+
     @FXML
-    private TableColumn colFranquicia;
+    private TableColumn<Producto, Integer> colEdadMin;
+
     @FXML
-    private TableColumn colEdicion;
+    private TableColumn<Producto, String> colFranquicia;
+
     @FXML
-    private TableColumn colTipoProd;
+    private TableColumn<Producto, String> colEdicion;
+
     @FXML
-    private TableColumn colTipoAccesorio;
+    private TableColumn<Producto, String> colTipoProd;
+
     @FXML
-    private TableColumn colMarca;
+    private TableColumn<Producto, String> colTipoAccesorio;
+
+    @FXML
+    private TableColumn<Producto, String> colMarca;
+
 
 
 
@@ -85,12 +113,29 @@ public class InventarioController {
     @FXML
     private void initialize() {
 
+        // CONFIGURAR LAS COLUMNAS
 
+        configurarColumnas();
 
+        // CARGAR DATOS AL ABRIR INVENTARIO
 
-        btnVolverM.setOnAction(event -> abrirPantalla(event,"selector.fxml"));
+        cargarInventario();
 
+        // ACTUALIZAR TABLA DESDE MARIA DB
+
+        btnActualizarTabla.setOnAction(event ->
+                cargarInventario()
+        );
+
+        // VOLVER AL SELECTOR
+
+        btnVolverM.setOnAction(event ->
+                abrirPantalla(event, "selector.fxml")
+        );
     }
+
+    private final ProductoRepository productoRepository =
+            new ProductoRepository();
 
     // METODO QUE PERMITE EL MOVIMIENTO ENTRE PANTALLAS
     private void abrirPantalla(ActionEvent event, String archivo) {
@@ -103,6 +148,147 @@ public class InventarioController {
         }
 
     }
+
+
+    private void configurarColumnas() {
+
+        // ATRIBUTOS GENERALES
+
+        colId.setCellValueFactory(c ->
+                new ReadOnlyObjectWrapper<>(
+                        c.getValue().getIdProducto()
+                )
+        );
+
+        colTipo.setCellValueFactory(c ->
+                new ReadOnlyStringWrapper(
+                        String.valueOf(c.getValue().getTipo())
+                )
+        );
+
+        colNombre.setCellValueFactory(c ->
+                new ReadOnlyStringWrapper(
+                        c.getValue().getNombreProducto()
+                )
+        );
+
+        colStock.setCellValueFactory(c ->
+                new ReadOnlyObjectWrapper<>(
+                        c.getValue().getStock()
+                )
+        );
+
+        colPrecio.setCellValueFactory(c ->
+                new ReadOnlyObjectWrapper<>(
+                        c.getValue().getPrecio()
+                )
+        );
+
+
+        // JUEGOS DE MESA
+
+        colMinJug.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyObjectWrapper<Integer>(
+                    p instanceof JuegoMesa j
+                            ? j.getMinJugadores() : null
+            );
+        });
+
+        colMaxJug.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyObjectWrapper<Integer>(
+                    p instanceof JuegoMesa j
+                            ? j.getMaxJugadores() : null
+            );
+        });
+
+        colEdadMin.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyObjectWrapper<Integer>(
+                    p instanceof JuegoMesa j
+                            ? j.getEdadMinima() : null
+            );
+        });
+
+
+        // TCG
+
+        colFranquicia.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyStringWrapper(
+                    p instanceof Tcg t
+                            ? t.getFranquicia() : null
+            );
+        });
+
+        colEdicion.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyStringWrapper(
+                    p instanceof Tcg t
+                            ? t.getEdicion() : null
+            );
+        });
+
+        colTipoProd.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyStringWrapper(
+                    p instanceof Tcg t
+                            ? t.getTipoProducto() : null
+            );
+        });
+
+
+        // ACCESORIOS
+
+        colTipoAccesorio.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyStringWrapper(
+                    p instanceof Accesorio a
+                            ? a.getTipoProducto() : null
+            );
+        });
+
+        colMarca.setCellValueFactory(c -> {
+            Producto p = c.getValue();
+
+            return new ReadOnlyStringWrapper(
+                    p instanceof Accesorio a
+                            ? a.getMarca() : null
+            );
+        });
+    }
+
+
+    private void cargarInventario() {
+
+        try {
+
+            tblInventario.setItems(
+                    FXCollections.observableArrayList(
+                            productoRepository.listarProductos()
+                    )
+            );
+
+        } catch (SQLException e) {
+
+            mostrarAlerta(
+                    "Error al cargar el inventario desde MariaDB"
+            );
+
+            e.printStackTrace();
+        }
+    }
+
+
+
     // ALERTAS
     private void mostrarAlerta(String mensaje) {
 
