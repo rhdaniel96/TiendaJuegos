@@ -188,4 +188,31 @@ public class ProductoRepository {
     }
 
 
+    // VERIFICAR SI YA EXISTE UN PRODUCTO
+
+    public boolean existeNombre(String nombre) throws SQLException {
+
+        String sql = """
+                SELECT 1
+                FROM PRODUCTO
+                WHERE NOMBREPRODUCTO = ?
+                LIMIT 1
+                """;
+
+        try (
+                Connection conexion = ConexionDB.getConnection();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, nombre);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                return rs.next();
+            }
+        }
+    }
+
+
+
 }

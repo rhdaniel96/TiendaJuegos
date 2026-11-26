@@ -406,6 +406,15 @@ public class MantenedorTiendaController {
                 );
             }
 
+            // VALIDAR QUE EL NOMBRE NO EXISTA EN MARIA DB
+
+            if (productoRepository.existeNombre(nombre)) {
+
+                throw new IllegalArgumentException(
+                        "Ya existe un producto registrado con ese nombre"
+                );
+            }
+
             int stock = leerEntero(txtStock, "Stock");
             int precio = leerEntero(txtPrice, "Precio");
 
@@ -526,9 +535,12 @@ public class MantenedorTiendaController {
 
 // VALIDAR TEXTFIELD NUMERICO
 
+
     private int leerEntero(TextField campo, String nombreCampo) {
 
         String valor = campo.getText().trim();
+
+        // VERIFICAR CAMPO VACIO
 
         if (valor.isBlank()) {
             throw new IllegalArgumentException(
@@ -538,7 +550,11 @@ public class MantenedorTiendaController {
 
         try {
 
+            // CONVERTIR TEXTO A ENTERO
+
             int numero = Integer.parseInt(valor);
+
+            // IMPEDIR NUMEROS NEGATIVOS
 
             if (numero < 0) {
                 throw new IllegalArgumentException(
@@ -555,6 +571,7 @@ public class MantenedorTiendaController {
             );
         }
     }
+
 
 
 // VALIDAR COMBOBOX

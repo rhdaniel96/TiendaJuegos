@@ -43,7 +43,7 @@
                         <Insets bottom="5.0" left="50.0" right="25.0" top="5.0" />
                      </VBox.margin>
                   </Label>
-                  <Button fx:id="btnActualizar" mnemonicParsing="false" text="Actualizar">
+                  <Button fx:id="btnActualizarTabla" mnemonicParsing="false" text="Actualizar">
                      <VBox.margin>
                         <Insets bottom="10.0" left="15.0" right="15.0" />
                      </VBox.margin>
