@@ -214,5 +214,60 @@ public class ProductoRepository {
     }
 
 
+    // ACTUALIZAR UN CAMPO DE UN PRODUCTO
+
+    public boolean actualizarCampo(
+            int idProducto,
+            String columna,
+            Object nuevoValor) throws SQLException {
+
+        // IDENTIFICAR LA COLUMNA DE MARIA DB
+
+        String columnaSQL = switch (columna) {
+
+            case "Nombre" -> "NOMBREPRODUCTO";
+            case "Stock" -> "STOCK";
+            case "Precio" -> "PRECIO";
+
+            case "Min Jugadores" -> "MINJUGADORES";
+            case "Max Jugadores" -> "MAXJUGADORES";
+            case "Edad Minima" -> "EDADMINIMA";
+
+            case "Franquicia" -> "FRANQUICIA";
+            case "Edicion" -> "EDICION";
+            case "Tipo Producto" -> "TIPOPRODUCTO";
+
+            case "Tipo Accesorio" -> "TIPOACCESORIO";
+            case "Marca" -> "MARCA";
+
+            default -> throw new IllegalArgumentException(
+                    "La columna seleccionada no se puede modificar"
+            );
+        };
+
+        // CONSTRUIR LA CONSULTA
+
+        String sql = "UPDATE PRODUCTO SET "
+                + columnaSQL
+                + " = ? WHERE IDPRODUCTO = ?";
+
+        // EJECUTAR ACTUALIZACION
+
+        try (
+                Connection conexion = ConexionDB.getConnection();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setObject(1, nuevoValor);
+            ps.setInt(2, idProducto);
+
+            int filasModificadas = ps.executeUpdate();
+
+            return filasModificadas == 1;
+        }
+    }
+
+
+
 
 }
