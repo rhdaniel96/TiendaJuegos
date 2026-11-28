@@ -580,7 +580,65 @@ public class InventarioController {
                     break;
 
 
-                    default:
+                case "Tipo Accesorio":
+
+                    // VERIFICAR QUE EL PRODUCTO SEA UN ACCESORIO
+
+                    if (!(producto instanceof Accesorio)) {
+
+                        throw new IllegalArgumentException(
+                                "Esta columna solo corresponde a Accesorios"
+                        );
+                    }
+
+                    // VERIFICAR QUE EL TIPO EXISTA EN MARIA DB
+
+                    if (!catalogoRepository.listarTiposAccesorios()
+                            .contains(nuevoTexto)) {
+
+                        throw new IllegalArgumentException(
+                                "El tipo de accesorio no existe en el catalogo"
+                        );
+                    }
+
+                    // ASIGNAR NUEVO VALOR
+
+                    nuevoValor = nuevoTexto;
+
+                    break;
+
+
+                case "Marca":
+
+                    // VERIFICAR QUE EL PRODUCTO SEA UN ACCESORIO
+
+                    if (!(producto instanceof Accesorio)) {
+
+                        throw new IllegalArgumentException(
+                                "Esta columna solo corresponde a Accesorios"
+                        );
+                    }
+
+                    // VERIFICAR QUE LA MARCA EXISTA EN MARIA DB
+
+                    if (!catalogoRepository.listarMarcas()
+                            .contains(nuevoTexto)) {
+
+                        throw new IllegalArgumentException(
+                                "La marca no existe en el catalogo"
+                        );
+                    }
+
+                    // ASIGNAR NUEVO VALOR
+
+                    nuevoValor = nuevoTexto;
+
+                    break;
+
+
+
+
+                default:
 
                     mostrarAdvertencia(
                             "Esta columna todavia no esta habilitada "
