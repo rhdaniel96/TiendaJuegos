@@ -20,6 +20,7 @@ import cl.duoc.tiendajuegos.repository.CatalogoRepository;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import java.util.List;
 
 import java.sql.SQLException;
 
@@ -414,6 +415,9 @@ public class InventarioController {
         try {
 
             Object nuevoValor;
+            // VALOR RELACIONADO PARA ACTUALIZACIONES DOBLES
+
+            String nuevoValorRelacionado = null;
 
             // VALIDAR SEGUN LA COLUMNA
 

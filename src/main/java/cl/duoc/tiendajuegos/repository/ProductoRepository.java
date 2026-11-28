@@ -268,6 +268,62 @@ public class ProductoRepository {
     }
 
 
+    // ACTUALIZAR FRANQUICIA Y EDICION
+
+    public boolean actualizarFranquiciaYEdicion(
+            int idProducto,
+            String franquicia,
+            String edicion) throws SQLException {
+
+        String sql = """
+                UPDATE PRODUCTO
+                SET FRANQUICIA = ?,
+                    EDICION = ?
+                WHERE IDPRODUCTO = ?
+                  AND TIPO = 'T'
+                """;
+
+        try (
+                Connection conexion = ConexionDB.getConnection();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, franquicia);
+            ps.setString(2, edicion);
+            ps.setInt(3, idProducto);
+
+            return ps.executeUpdate() == 1;
+        }
+    }
+
+
+    // ACTUALIZAR TIPO DE ACCESORIO Y MARCA
+
+    public boolean actualizarTipoAccesorioYMarca(
+            int idProducto,
+            String tipoAccesorio,
+            String marca) throws SQLException {
+
+        String sql = """
+                UPDATE PRODUCTO
+                SET TIPOACCESORIO = ?,
+                    MARCA = ?
+                WHERE IDPRODUCTO = ?
+                  AND TIPO = 'A'
+                """;
+
+        try (
+                Connection conexion = ConexionDB.getConnection();
+                PreparedStatement ps = conexion.prepareStatement(sql)
+        ) {
+
+            ps.setString(1, tipoAccesorio);
+            ps.setString(2, marca);
+            ps.setInt(3, idProducto);
+
+            return ps.executeUpdate() == 1;
+        }
+    }
 
 
 }

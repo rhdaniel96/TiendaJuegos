@@ -120,10 +120,10 @@ public class MantenedorTiendaController {
         cargarCatalogos();
 
 
-        // DESHABILITAR COMBOBOX DEPENDIENTES
+        // DESHABILITAR COMBOBOX
 
         cmbEdicion.setDisable(true);
-        cmbMarca.setDisable(true);
+
 
 
         // DETECTAR SELECCION DE FRANQUICIA
@@ -133,11 +133,6 @@ public class MantenedorTiendaController {
         );
 
 
-        // DETECTAR SELECCION DE TIPO DE ACCESORIO
-
-        cmbTipoAccesorio.setOnAction(event ->
-                cargarMarcas()
-        );
 
 
         // OCULTAR LOS TRES VBOX SECUNDARIOS
@@ -174,29 +169,42 @@ public class MantenedorTiendaController {
 
     // CARGAR CATALOGOS DESDE LA BASE DE DATOS
 
+
     private void cargarCatalogos() {
 
         try {
+
+            // FRANQUICIAS TCG
 
             cmbFranquicia.getItems().setAll(
                     catalogoRepository.listarFranquicias()
             );
 
+            // TIPOS DE PRODUCTO TCG
+
             cmbTipoTCG.getItems().setAll(
                     catalogoRepository.listarTiposTCG()
             );
 
+            // TIPOS DE ACCESORIOS
+
             cmbTipoAccesorio.getItems().setAll(
                     catalogoRepository.listarTiposAccesorios()
+            );
+
+            // TODAS LAS MARCAS
+
+            cmbMarca.getItems().setAll(
+                    catalogoRepository.listarMarcas()
             );
 
         } catch (SQLException e) {
 
             mostrarAlerta("Error al cargar los catalogos");
             e.printStackTrace();
-
         }
     }
+
 
 
     // CARGAR EDICIONES SEGUN FRANQUICIA
@@ -243,50 +251,6 @@ public class MantenedorTiendaController {
         }
     }
 
-
-    // CARGAR MARCAS SEGUN TIPO DE ACCESORIO
-
-    private void cargarMarcas() {
-
-        // OBTENER TIPO DE ACCESORIO SELECCIONADO
-
-        String tipoAccesorio = cmbTipoAccesorio.getValue();
-
-
-        // LIMPIAR MARCAS ANTERIORES
-
-        cmbMarca.getSelectionModel().clearSelection();
-        cmbMarca.setValue(null);
-        cmbMarca.getItems().clear();
-        cmbMarca.setDisable(true);
-
-
-        // COMPROBAR SELECCION
-
-        if (tipoAccesorio == null) {
-            return;
-        }
-
-
-        // CARGAR MARCAS DESDE MYSQL
-
-        try {
-
-            cmbMarca.getItems().setAll(
-                    catalogoRepository.listarMarcas(tipoAccesorio)
-            );
-
-            cmbMarca.setDisable(
-                    cmbMarca.getItems().isEmpty()
-            );
-
-        } catch (SQLException e) {
-
-            mostrarAlerta("Error al cargar las marcas");
-            e.printStackTrace();
-
-        }
-    }
 
 
     // OCULTAR LOS VBOX SECUNDARIOS
@@ -627,12 +591,10 @@ public class MantenedorTiendaController {
         cmbTipoAccesorio.getSelectionModel().clearSelection();
         cmbMarca.getSelectionModel().clearSelection();
 
-        // REINICIAR COMBOBOX DEPENDIENTES
-        cmbEdicion.getItems().clear();
-        cmbMarca.getItems().clear();
+        // REINICIAR COMBOBOX DEPENDIENTE
 
+        cmbEdicion.getItems().clear();
         cmbEdicion.setDisable(true);
-        cmbMarca.setDisable(true);
 
         // OCULTAR VBOX SECUNDARIOS
         ocultarVBox();
